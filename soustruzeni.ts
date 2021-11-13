@@ -1,8 +1,4 @@
-/**
- * @param {number} prumer - Řezný průměr v mm
- * @param {number} rychlost - Řezná rychlost v 1/min 
- * @returns {number} otacky v 1/min  
- */
+
 function vypocitej_otacky(prumer: number, rychlost: number): number {
     return (rychlost * 1_000) / (prumer * Math.PI)
 }
@@ -56,22 +52,12 @@ class RangeTextController {
     }
 
     private update_all() {
-        console.log(
-            RangeTextController.controllers[PRUMER].value,
-            RangeTextController.controllers[OTACKY].value,
-            RangeTextController.controllers[RYCHLOST].value,
-        );
-
         if (this.id === RYCHLOST) {
-
             let otacky = vypocitej_otacky(
                 RangeTextController.controllers[PRUMER].value,
                 RangeTextController.controllers[RYCHLOST].value,
             );
-            console.log(otacky);
-
             RangeTextController.controllers[OTACKY].value = otacky;
-
         }
         else {
             let rychlost = vypocitej_rychlost(
@@ -79,7 +65,6 @@ class RangeTextController {
                 RangeTextController.controllers[OTACKY].value,
             );
             RangeTextController.controllers[RYCHLOST].value = rychlost;
-
         }
     }
 }
@@ -93,10 +78,6 @@ function main() {
         let text = elm_div[2] as HTMLInputElement;
         text.value = range.value;
         new RangeTextController(nazev_veliciny, range, text)
-
-        document.body.addEventListener("input", (e) => {
-            let a = (e.target as HTMLInputElement).parentElement as HTMLDivElement;
-        });
     }
 
 
