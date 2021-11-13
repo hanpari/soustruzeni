@@ -27,7 +27,7 @@ class RangeTextController {
         return this._value
     }
     public set value(value: number) {
-        value = Math.round(value * 10) / 10;
+        value = Math.round(value * 100) / 100;
         this.range_input.value = this.number_input.value = value.toString();
         this._value = value;
     }
@@ -39,15 +39,15 @@ class RangeTextController {
         range_input.addEventListener(
             "input", (ev) => {
                 this.value = +range_input.value;
-                this.update_all();
             }
         );
-        number_input.addEventListener("input",
+        range_input.addEventListener("change", (ev) => this.update_all());
+        number_input.addEventListener("change",
             (ev) => {
-                range_input.value = number_input.value;
-                number_input.value = range_input.value;
-                this.value = +range_input.value;
+                this.range_input.value = this.number_input.value
             });
+        number_input.addEventListener("focusout",
+            (ev) => this.number_input.value = this.range_input.value);
         this.value = +range_input.value;
         RangeTextController.controllers[id] = this;
     }

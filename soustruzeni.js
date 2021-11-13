@@ -20,13 +20,12 @@ var RangeTextController = /** @class */ (function () {
         this.number_input = number_input;
         range_input.addEventListener("input", function (ev) {
             _this.value = +range_input.value;
-            _this.update_all();
         });
-        number_input.addEventListener("input", function (ev) {
-            range_input.value = number_input.value;
-            number_input.value = range_input.value;
-            _this.value = +range_input.value;
+        range_input.addEventListener("change", function (ev) { return _this.update_all(); });
+        number_input.addEventListener("change", function (ev) {
+            _this.range_input.value = _this.number_input.value;
         });
+        number_input.addEventListener("focusout", function (ev) { return _this.number_input.value = _this.range_input.value; });
         this.value = +range_input.value;
         RangeTextController.controllers[id] = this;
     }
@@ -35,7 +34,7 @@ var RangeTextController = /** @class */ (function () {
             return this._value;
         },
         set: function (value) {
-            value = Math.round(value * 10) / 10;
+            value = Math.round(value * 100) / 100;
             this.range_input.value = this.number_input.value = value.toString();
             this._value = value;
         },
