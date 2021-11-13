@@ -27,8 +27,9 @@ class RangeTextController {
         return this._value
     }
     public set value(value: number) {
+        value = Math.round(value * 10) / 10;
         this.range_input.value = this.number_input.value = value.toString();
-        this._value = value
+        this._value = value;
     }
 
     constructor(
@@ -71,7 +72,6 @@ class RangeTextController {
 
 
 function main() {
-
     for (let nazev_veliciny of VELICINY) {
         let elm_div = document.getElementById(nazev_veliciny).children;
         let range = elm_div[1] as HTMLInputElement;

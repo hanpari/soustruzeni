@@ -1,8 +1,3 @@
-/**
- * @param {number} prumer - Řezný průměr v mm
- * @param {number} rychlost - Řezná rychlost v 1/min
- * @returns {number} otacky v 1/min
- */
 function vypocitej_otacky(prumer, rychlost) {
     return (rychlost * 1000) / (prumer * Math.PI);
 }
@@ -40,6 +35,7 @@ var RangeTextController = /** @class */ (function () {
             return this._value;
         },
         set: function (value) {
+            value = Math.round(value * 10) / 10;
             this.range_input.value = this.number_input.value = value.toString();
             this._value = value;
         },
@@ -47,10 +43,8 @@ var RangeTextController = /** @class */ (function () {
         configurable: true
     });
     RangeTextController.prototype.update_all = function () {
-        console.log(RangeTextController.controllers[PRUMER].value, RangeTextController.controllers[OTACKY].value, RangeTextController.controllers[RYCHLOST].value);
         if (this.id === RYCHLOST) {
             var otacky = vypocitej_otacky(RangeTextController.controllers[PRUMER].value, RangeTextController.controllers[RYCHLOST].value);
-            console.log(otacky);
             RangeTextController.controllers[OTACKY].value = otacky;
         }
         else {
@@ -69,8 +63,5 @@ function main() {
         var text = elm_div[2];
         text.value = range.value;
         new RangeTextController(nazev_veliciny, range, text);
-        document.body.addEventListener("input", function (e) {
-            var a = e.target.parentElement;
-        });
     }
 }
